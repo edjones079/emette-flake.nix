@@ -9,6 +9,7 @@
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ./hyprland.nix
+      #./update.nix
       #./xp_pen_pentablet.nix
     ];
 
@@ -337,6 +338,7 @@
 
      pkgs.lshw
      pkgs.waybar
+     pkgs.clipman
 
      pkgs.alsa-scarlett-gui
      pkgs.alsa-utils
