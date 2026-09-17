@@ -272,6 +272,7 @@
 
   nixpkgs.config.permittedInsecurePackages = [
 	"electron-39.8.10"
+	"electron-41.9.1"
 	"logseq-0.10.15"
 	"fluffychat-linux-1.27.0"
 	"olm-3.2.16"
@@ -285,6 +286,7 @@
 
   # Media
 
+     pkgs.anki
      pkgs.jellyfin
      pkgs.jellyfin-web
      pkgs.jellyfin-ffmpeg
@@ -368,7 +370,7 @@
      pkgs.brightnessctl
      pkgs.ddcutil
      pkgs.miniflux
-     pkgs.electron
+     #pkgs.electron
 
   # Notes
 
