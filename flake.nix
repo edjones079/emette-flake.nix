@@ -1,16 +1,16 @@
 {
-  description = "Emette's Flake";
+  description = "EmFlake";
 
   inputs = {
 
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
 
-    #home-manager = {
+    home-manager = {
 
-    #  url = "github:nix-community/home-manager/release-25.05";
-    #  inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:nix-community/home-manager/release-26.05";
+      inputs.nixpkgs.follows = "nixpkgs";
 
-    #};
+    };
 
     # nixgl.url = "github:nix-community/nixGL";
 
@@ -38,33 +38,40 @@
 
   outputs = { self, nixpkgs, home-manager, ... }@inputs: {
     
-    nixosConfigurations = {
+    nixosConfigurations.wander = nixpkgs.lib.nixosSystem {
 
-      wander = nixpkgs.lib.nixosSystem {
-
-        specialArgs = { inherit inputs; };
-
-        modules = [
+      specialArgs = { inherit inputs; };
+      modules = [
 	
-	  ./modules/configuration.nix
-	  ./modules/fhs.nix
+	./modules/configuration.nix
+	./modules/fhs.nix
 
-	  # home-manager.nixosModules.default
-	  # {
+	home-manager.nixosModules.default
+	{
 
-	  #  home-manager = {
+	  home-manager = {
 
-	  #    useGlobalPkgs = true;
-	  #    useUserPackages = true;
-	  #    users.electrickazoo = import ./modules/home.nix;
+	    useGlobalPkgs = true;
+	    useUserPackages = true;
+	    users.electrickazoo = import ./modules/home.nix;
 
-	  #  };
+	  };
 
-	  # }
+	}
 
-        ];
+      ];
 
-      };
+    };
+
+    nixosConfiguration.dormin = nixpkgs.lib.nixosSystem {
+
+      specialArgs = { inherit inputs; };
+
+      modules = [
+
+        ./hosts/dormin
+
+      ];
 
     };
 
