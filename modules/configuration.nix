@@ -273,6 +273,7 @@
   nixpkgs.config.permittedInsecurePackages = [
 	"electron-39.8.10"
 	"electron-41.9.1"
+	"electron-41.10.7"
 	"logseq-0.10.15"
 	"fluffychat-linux-1.27.0"
 	"olm-3.2.16"
@@ -336,6 +337,7 @@
      pkgs.reaper
      pkgs.puredata
      pkgs.fmodex
+     pkgs.musikcube
      #pkgs.vcv-rack
 
      pkgs.lshw
