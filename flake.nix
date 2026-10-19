@@ -53,7 +53,8 @@
 
 	    useGlobalPkgs = true;
 	    useUserPackages = true;
-	    users.electrickazoo = import ./modules/home.nix;
+	    extraSpecialArgs = { inherit inputs; };
+	    users.electrickazoo = import ./hosts/wander/home.nix;
 
 	  };
 

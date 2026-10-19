@@ -340,6 +340,7 @@
      pkgs.musikcube
      #pkgs.vcv-rack
 
+     pkgs.eww
      pkgs.lshw
      pkgs.waybar
      pkgs.clipman
