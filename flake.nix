@@ -64,7 +64,7 @@
 
     };
 
-    nixosConfiguration.dormin = nixpkgs.lib.nixosSystem {
+    nixosConfigurations.dormin = nixpkgs.lib.nixosSystem {
 
       specialArgs = { inherit inputs; };
 
