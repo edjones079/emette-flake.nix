@@ -382,7 +382,7 @@
 
   # Code Editors
 
-     pkgs.vscode
+     pkgs.vscodium
      pkgs.neovim
 
   # Art Applications

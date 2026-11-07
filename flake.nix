@@ -64,17 +64,17 @@
 
     };
 
-    nixosConfigurations.dormin = nixpkgs.lib.nixosSystem {
+#    nixosConfigurations.dormin = nixpkgs.lib.nixosSystem {
+#
+#      specialArgs = { inherit inputs; };
 
-      specialArgs = { inherit inputs; };
+#      modules = [
 
-      modules = [
+#        ./hosts/dormin
 
-        ./hosts/dormin
+#      ];
 
-      ];
-
-    };
+#    };
 
   };
 
