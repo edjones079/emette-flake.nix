@@ -388,7 +388,7 @@
   # Art Applications
 
     pkgs.krita
-    pkgs.xp-pen-g430-driver
+    pkgs.xppen_4
     pkgs.opentabletdriver
     pkgs.tiled    
 
