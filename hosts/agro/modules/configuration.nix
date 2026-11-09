@@ -15,7 +15,7 @@
 
   # Bootloader
 
-  boot.loader.systemd-boot.enable = false;
+  boot.loader.systemd-boot.enable = true;
 
   boot.loader.grub = {
 
@@ -35,7 +35,7 @@
 
   # Networking
 
-  networking.hostName = "wander"; # Define your hostname.
+  networking.hostName = "agro"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
@@ -49,21 +49,21 @@
 
   # services.pulseaudio.enable = true;
 
-  services.printing.enable = true;
+  #services.printing.enable = true;
 
-  services.xserver.enable = true;
-  services.xserver.videoDrivers = [ "nvidia" "modesetting" ];
-  services.xserver.libinput.enable = true;
-  services.xserver.wacom.enable = true;
+  #services.xserver.enable = true;
+  #services.xserver.videoDrivers = [ "nvidia" "modesetting" ];
+  #services.xserver.libinput.enable = true;
+  #services.xserver.wacom.enable = true;
 
-  hardware.graphics.enable = true;
-  hardware.graphics.extraPackages = [ pkgs.mesa.drivers ];
+  #hardware.graphics.enable = true;
+  #hardware.graphics.extraPackages = [ pkgs.mesa.drivers ];
 
-  hardware.nvidia = {
+  #hardware.nvidia = {
 
-    open = true;
-    modesetting.enable = true;
-    package = config.boot.kernelPackages.nvidiaPackages.latest;
+   # open = true;
+    #modesetting.enable = true;
+    #package = config.boot.kernelPackages.nvidiaPackages.latest;
     #package = config.boot.kernelPackages.nvidiaPackages.mkDriver {
 
      # version = "565.77";
@@ -74,54 +74,54 @@
 
     #};
 
-    nvidiaSettings = true;
+    #nvidiaSettings = true;
 
-    prime = {
+    #prime = {
 
-      offload.enable = true;
+      #offload.enable = true;
 
-      nvidiaBusId = "PCI:1:00:0";
-      intelBusId = "PCI:0:02:0";
+      #nvidiaBusId = "PCI:1:00:0";
+      #intelBusId = "PCI:0:02:0";
 
-    };
+    #};
 
-    powerManagement = {
+    #powerManagement = {
       
-      enable = true;
-      finegrained = true;
+      #enable = true;
+      #finegrained = true;
 
-    };
+    #};
  
-    forceFullCompositionPipeline = true;
+    #forceFullCompositionPipeline = true;
 
-  };
+  #};
 
-  hardware.opentabletdriver.enable = true;
-  hardware.opentabletdriver.daemon.enable = true;
-  hardware.uinput.enable = true;
+  #hardware.opentabletdriver.enable = true;
+  #hardware.opentabletdriver.daemon.enable = true;
+  #hardware.uinput.enable = true;
 
-  hardware.bluetooth = {
+  #hardware.bluetooth = {
 
-	enable = true;
-	powerOnBoot = true;
-	settings = {
+	#enable = true;
+	#powerOnBoot = true;
+	#settings = {
 
-		General = {
+		#General = {
 		
-			Experimental = true;
-			FastConnectable = true;
+			#Experimental = true;
+			#FastConnectable = true;
 	
-		};
+		#};
 
-		Policy = {
+		#Policy = {
 
-			AutoEnable = true;
+			#AutoEnable = true;
 
-		};
+		#};
 
-	};
+	#};
 
-  };
+  #};
 
   # Time Zone
 
@@ -144,9 +144,9 @@
 
   # Virtualisation
 
-  virtualisation.docker.enable = true;
-  virtualisation.docker.rootless.enable = true;
-  virtualisation.docker.rootless.setSocketVariable = true;
+  #virtualisation.docker.enable = true;
+  #virtualisation.docker.rootless.enable = true;
+  #virtualisation.docker.rootless.setSocketVariable = true;
 
   # virtualisation.libvirtd = {
 
@@ -156,47 +156,47 @@
 
   #		swtpm.enable = true;
   #		ovmf.packages = [ pkgs.OVMFFull.fd ];
-  
+
   #	};
-  	
+
   # };
 
-  virtualisation.spiceUSBRedirection.enable = true;
+  # virtualisation.spiceUSBRedirection.enable = true;
 
-  # users.groups.libvirtd.members = [ "electrickazoo" ];
-  users.groups.kvm.members = [ "electrickazoo" ];
+  # users.groups.libvirtd.members = [ "emettej" ];
+  # users.groups.kvm.members = [ "emettej" ];
 
 
   # Users
 
   nix.settings.allowed-users = [
 
-	"root"
-	"electrickazoo"
+  	"root"
+	"emettej"
 
   ];
 
   nix.settings.trusted-users = [
   	"root"
-	"electrickazoo"
+	"emettej"
   ];
 
-  users.users.electrickazoo = {
+  users.users."emettej" = {
     isNormalUser = true;
     description = "Emette Jones";
-    extraGroups = [ "networkmanager" "wheel" "video" "i2c" "docker" ];
-    packages = with pkgs; [ tree ];
+    extraGroups = [ "networkmanager" "wheel" ];
+    packages = with pkgs; [];
   };
 
   # Programs
 
   programs = {
 
-    foot.enable = true;
-    firefox.enable = true;
-    steam.enable = true;
-    #light.enable = true;
-    # nix-ld.enable = true;
+    # foot.enable = true;
+    # firefox.enable = true;
+    # steam.enable = true;
+    #
+    #
 
     # waybar.enable = true;
 
@@ -207,11 +207,11 @@
     "flakes"
   ];
 
-  # Services  
+  # Services
 
   services.udisks2.enable = true;
 
-  services.getty.autologinUser = "electrickazoo";
+  services.getty.autologinUser = "emettej";
 
   services.displayManager.sddm = {
 
@@ -220,218 +220,47 @@
 
   };
 
-  services.udev.extraRules = ''
-    KERNEL=="i2c-[0-0]*", GROUP="i2c", MODE="0660"
-  '';
-
-
-  security.rtkit.enable = true;
-
-  services.pipewire = {
-
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-
-    jack.enable = true;
-    pulse.enable = true;
-
-  };
-
-  services.freshrss = {
-
-    enable = true;
-    baseUrl = "https://rss.cheredeprince.net";
-    authType = "none";
-
-  };
-
-  services.avahi = {
-
-    enable = true;
-    nssmdns4 = true;
-    openFirewall = true;
-
-  };
-
-  services.xserver = {
-
-    xkb.layout = "us, de";
-    xkb.options = "grp:caps_toggle";
-
-  };
-
-  services.jellyfin.enable = true;
-
-  # Environment
-
   environment.variables = {
-
     WAYLAND_DISPLAY = ":0";
   };
 
-  nixpkgs.config.permittedInsecurePackages = [
-	"electron-39.8.10"
-	"electron-41.9.1"
-	"electron-41.10.7"
-	"logseq-0.10.15"
-	"fluffychat-linux-1.27.0"
-	"olm-3.2.16"
-	"docker-28.5.2"
-	"python3.13-beets-2.5.1"
+  # List packages installed in system profile.
+  environment.systemPackages = with pkgs; [
+    neovim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    wget
+    git
+    firefox
+    hyprland
+    kitty
+    home-manager
   ];
 
-  environment.systemPackages = [
+  # Some programs need SUID wrappers, can be configured further or are
+  # started in user sessions.
+  # programs.mtr.enable = true;
+  # programs.gnupg.agent = {
+  #   enable = true;
+  #   enableSSHSupport = true;
+  # };
 
-     inputs.rose-pine-hyprcursor.packages.${pkgs.system}.default
-
-  # Media
-
-     pkgs.anki
-     pkgs.jellyfin
-     pkgs.jellyfin-web
-     pkgs.jellyfin-ffmpeg
-     pkgs.vlc
-     pkgs.ffmpeg-full
-     pkgs.mpv
-     pkgs.yt-dlp
-     pkgs.unetbootin
-     pkgs.beets
-
-  # Packages
-
-     pkgs.cron
-     pkgs.cups
-     pkgs.hyfetch
-     pkgs.firefox
-     pkgs.git
-     pkgs.git-lfs
-     pkgs.wget
-     pkgs.ripcord
-     pkgs.revolt-desktop
-     pkgs.weechat
-     pkgs.steam
-     pkgs.steam-run
-     pkgs.signal-desktop
-     pkgs.kdePackages.dolphin
-    
-     pkgs.fluffychat
-     pkgs.matrix-synapse
-     # pkgs.matrix-appservice-discord
-     
-     pkgs.cinny-desktop
-
-     pkgs.hledger
-     pkgs.hledger-ui
-     pkgs.hledger-iadd
-     pkgs.hledger-web
-
-     pkgs.obsidian
-     pkgs.notesnook
-     pkgs.audacity
-     pkgs.freetube
-     pkgs.lmms
-     pkgs.freshrss
-     pkgs.webcord
-     pkgs.discord
-     pkgs.reaper
-     pkgs.puredata
-     pkgs.fmodex
-     pkgs.musikcube
-     #pkgs.vcv-rack
-
-     pkgs.eww
-     pkgs.lshw
-     pkgs.waybar
-     pkgs.clipman
-
-     pkgs.alsa-scarlett-gui
-     pkgs.alsa-utils
-     pkgs.pwvucontrol
-
-     pkgs.qbittorrent
-     pkgs.wireguard-tools
-
-     pkgs.curl
-     pkgs.zip
-     pkgs.unzip
-     pkgs.gnutar
-
-     pkgs.prismlauncher
-     pkgs.dolphin-emu
-
-  # Terminals
-
-     pkgs.kitty
-     pkgs.foot
-
-  # Managers
-
-     pkgs.home-manager
-     pkgs.hyprland
-     pkgs.nvd
-     pkgs.brightnessctl
-     pkgs.ddcutil
-     pkgs.miniflux
-     #pkgs.electron
-
-  # Notes
-
-     pkgs.logseq
-     pkgs.zathura
-
-  # Code Editors
-
-     pkgs.vscodium
-     pkgs.neovim
-
-  # Art Applications
-
-    pkgs.krita
-    pkgs.xppen_4
-    pkgs.opentabletdriver
-    pkgs.tiled    
-
-  # Game Engines / Frameworks
-
-     pkgs.unityhub
-     pkgs.godotPackages_4_5.godot-mono
-     pkgs.dotnetCorePackages.dotnet_9.sdk
-     pkgs.vscode-extensions.woberg.godot-dotnet-tools
-
-     # pkgs.nodejs_26
-     pkgs.python313Packages.meson
-     pkgs.python313Packages.cmake
-     pkgs.gnumake
-
-     pkgs.libgccjit
-     pkgs.gnat15
-
-     pkgs.glfw
-     pkgs.mesa
-     pkgs.cmake
-     pkgs.gcc
-
-     pkgs.libGL
-     pkgs.pkg-config
-     pkgs.direnv
-     pkgs.nix-direnv
-
-     # Emulation
-
-     pkgs.vbam
-
-     # Virtualisation
-
-     pkgs.gnome-boxes
-     pkgs.dnsmasq
-     pkgs.phodav
-
-  ];
+  # List services that you want to enable:
 
   # Enable the OpenSSH daemon.
-  services.openssh.enable = true;
+  # services.openssh.enable = true;
+  
+  # Open ports in the firewall.
+  # networking.firewall.allowedTCPPorts = [ ... ];
+  # networking.firewall.allowedUDPPorts = [ ... ];
+  # Or disable the firewall altogether.
+  # networking.firewall.enable = false;
 
-  system.stateVersion = "25.05"; # Did you read the comment?
+  # Copy the NixOS configuration file and link it from the resulting system
+  # (/run/current-system/configuration.nix). This is useful in case you
+  # accidentally delete configuration.nix.
+  # system.copySystemConfiguration = true;
+
+  # For more information, see `man configuration.nix` or https://nixos.org/manual/nixos/stable/options#opt-system.stateVersion .
+  system.stateVersion = "26.05"; # Did you read the comment?
 
 }
+

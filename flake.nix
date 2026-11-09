@@ -67,10 +67,23 @@
     nixosConfigurations.agro = nixpkgs.lib.nixosSystem {
 
       specialArgs = { inherit inputs; };
-
       modules = [
 
         ./hosts/agro/modules/configuration.nix
+
+	home-manager.nixosModules.home-manager
+	{
+
+	  home-manager = {
+
+	    useGlobalPkgs = true;
+	    useUserPackages = true;
+	    extraSpecialArgs = { inherit inputs; };
+	    users.emettej = import ./hosts/agro/modules/home.nix;
+
+	  };
+
+	}
 
       ];
 
