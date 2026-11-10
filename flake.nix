@@ -1,94 +1,128 @@
+# Flake - An attribute set of inputs / outputs.
+
 {
-  description = "EmFlake";
+	description = "EmFlake";
 
-  inputs = {
+	# Inputs - An nested attribute set that contains key-value pairs of external nix expressions!
 
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
+	inputs = {
 
-    home-manager = {
+		nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
 
-      url = "github:nix-community/home-manager/release-26.05";
-      inputs.nixpkgs.follows = "nixpkgs";
+		home-manager = {
 
-    };
+			url = "github:nix-community/home-manager/release-26.05";
+			inputs.nixpkgs.follows = "nixpkgs";
 
-    # nixgl.url = "github:nix-community/nixGL";
+		};
 
-    firefox.url = "github:nix-community/flake-firefox-nightly";
-    firefox.inputs.nixpkgs.follows = "nixpkgs";
+		# nixgl.url = "github:nix-community/nixGL";
 
-    hyprland.url = "github:hyprwm/Hyprland";
+		firefox.url = "github:nix-community/flake-firefox-nightly";
+		firefox.inputs.nixpkgs.follows = "nixpkgs";
 
-    rose-pine-hyprcursor = {
+		hyprland.url = "github:hyprwm/Hyprland";
 
-      url = "github:ndom91/rose-pine-hyprcursor";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.hyprlang.follows = "hyprland/hyprlang";
+		rose-pine-hyprcursor = {
 
-    };
+			url = "github:ndom91/rose-pine-hyprcursor";
+			inputs.nixpkgs.follows = "nixpkgs";
+			inputs.hyprlang.follows = "hyprland/hyprlang";
 
-    nbfc-linux = {
+		};
+
+		nbfc-linux = {
       
-      url = "github:nbfc-linux/nbfc-linux?dir=pkgbuilds/nix";
-      inputs.nixpkgs.follows = "nixpkgs";
+			url = "github:nbfc-linux/nbfc-linux?dir=pkgbuilds/nix";
+			inputs.nixpkgs.follows = "nixpkgs";
 
-    };
+		};
 
-  };
+	};
 
-  outputs = { self, nixpkgs, home-manager, ... }@inputs: {
-    
-    nixosConfigurations.wander = nixpkgs.lib.nixosSystem {
+	# Outputs - A function that takes an attribute set of inputs to build the declared outputs!
 
-      specialArgs = { inherit inputs; };
-      modules = [
+	outputs = { self, nixpkgs, home-manager, ... }@inputs: 
+
+	# Define local variables for use in system & user configuration!
+
+	let
+		# inherit - Create copy of variables & functionz from lib.nix!
+
+		inherit (nixpkgs) lib; # lib = nixpkgs.lib;
+
+		# import - Load, parse, and return Nix expression in the file path!
+
+		util = import ./lib {  # util = lib.$(functions);
+			inherit system pkgs home-manager lib; overlays = (pkgs.overlays);
+		};
+
+		inherit (util) user; # user = util.user;
+		inherit (util) host; # host = util.host;
+
+		pkgs = import nixpkgs {
+
+			inherit system; # system = system;
+			config.allowUnfree = true; # nixpkgs.config.allowUnfree = true;
+			overlays = []; # overlays = [];
+
+		};
 	
-	./modules/configuration.nix
-	./modules/fhs.nix
+		system = "x86_64-linux";
+  	in
+  	{
+    
+		nixosConfigurations.wander = nixpkgs.lib.nixosSystem {
 
-	home-manager.nixosModules.default
-	{
+			specialArgs = { inherit inputs; };
+			modules = [
+	
+				./hosts/wander/modules/configuration.nix
+				./hosts/wander/modules/fhs.nix
 
-	  home-manager = {
+				home-manager.nixosModules.default
+				{
 
-	    useGlobalPkgs = true;
-	    useUserPackages = true;
-	    extraSpecialArgs = { inherit inputs; };
-	    users.electrickazoo = import ./hosts/wander/home.nix;
+					home-manager = {
 
-	  };
+	    					useGlobalPkgs = true;
+	    					useUserPackages = true;
+	    					extraSpecialArgs = { inherit inputs; };
+	    					users.electrickazoo = import ./hosts/wander/home.nix;
 
-	}
+	  				};
 
-      ];
+				}
 
-    };
+			];
 
-    nixosConfigurations.agro = nixpkgs.lib.nixosSystem {
+    		};
 
-      specialArgs = { inherit inputs; };
-      modules = [
+    		nixosConfigurations.agro = nixpkgs.lib.nixosSystem {
 
-        ./hosts/agro/modules/configuration.nix
+			specialArgs = { inherit inputs; };
+			modules = [
 
-	home-manager.nixosModules.home-manager
-	{
+				./hosts/agro/modules/configuration.nix
 
-	  home-manager = {
+				home-manager.nixosModules.home-manager
+				{
 
-	    useGlobalPkgs = true;
-	    useUserPackages = true;
-	    extraSpecialArgs = { inherit inputs; };
-	    users.emettej = import ./hosts/agro/modules/home.nix;
+					home-manager = {
 
-	  };
+	    					useGlobalPkgs = true;
+	    					useUserPackages = true;
+	    					extraSpecialArgs = { inherit inputs; };
+	    					users.emettej = import ./hosts/agro/modules/home.nix;
 
-	}
+	  				};
 
-      ];
+				}
 
-    };
+			];
 
-  };
+		};
+
+	};
 
 }

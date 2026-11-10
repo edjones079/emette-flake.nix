@@ -11,7 +11,7 @@ in {
     networkmanagerapplet
     rofi
     swww
-    # waybar
+    waybar
     hyprpaper
 
   ];

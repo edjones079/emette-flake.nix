@@ -15,7 +15,7 @@
 
   # Bootloader
 
-  boot.loader.systemd-boot.enable = true;
+  boot.loader.systemd-boot.enable = false;
 
   boot.loader.grub = {
 
