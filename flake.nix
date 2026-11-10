@@ -72,57 +72,84 @@
   	in
   	{
     
-		nixosConfigurations.wander = nixpkgs.lib.nixosSystem {
+		nixosConfigurations = { 
 
-			specialArgs = { inherit inputs; };
-			modules = [
+			wander = nixpkgs.lib.nixosSystem {
+
+				specialArgs = { inherit inputs; };
+				modules = [
 	
-				./hosts/wander/modules/configuration.nix
-				./hosts/wander/modules/fhs.nix
+					./hosts/wander/modules/configuration.nix
+					./hosts/wander/modules/fhs.nix
 
-				home-manager.nixosModules.default
-				{
+					home-manager.nixosModules.default
+					{
 
-					home-manager = {
+						home-manager = {
 
-	    					useGlobalPkgs = true;
-	    					useUserPackages = true;
-	    					extraSpecialArgs = { inherit inputs; };
-	    					users.electrickazoo = import ./hosts/wander/home.nix;
+	    						useGlobalPkgs = true;
+	    						useUserPackages = true;
+	    						extraSpecialArgs = { inherit inputs; };
+	    						users.electrickazoo = import ./hosts/wander/home.nix;
 
-	  				};
+	  					};
 
-				}
+					}
 
-			];
+				];
 
-    		};
+    			};
 
-    		nixosConfigurations.agro = nixpkgs.lib.nixosSystem {
+			#framework = hosts.mkHost {
+			#	name = "agro";
+			#	NICs = [ "wlp2s0" "lo" "eth0" "p2p-dev-wlp1s0" ];
+			#	kernelPackage = pkgs.linuxPackages;
+			#	initrdMods = [ 
+			#		"xhci_pci"
+			#		"nvme"
+			#		"usb_storage"
+			#		"sd_mod"
+			#		"thunderbolt"
+			#		"usbhid"
+			#	];
+			#	kernelMods = [ "kvm-amd" ];
+			#	kernelParams = [];
+			#	systemConfig = { };
 
-			specialArgs = { inherit inputs; };
-			modules = [
+			#	users = [{
+			#		name = "emettej";
+			#		groups = [ "wheel" "networkmanager" "video" ];
+			#		udi = 1000;
+			#	}];
 
-				./hosts/agro/modules/configuration.nix
+			#	cpuCores = 4;
+			#};
 
-				home-manager.nixosModules.home-manager
-				{
+    			agro = nixpkgs.lib.nixosSystem {
 
-					home-manager = {
+				specialArgs = { inherit inputs; };
+				modules = [
 
-	    					useGlobalPkgs = true;
-	    					useUserPackages = true;
-	    					extraSpecialArgs = { inherit inputs; };
-	    					users.emettej = import ./hosts/agro/modules/home.nix;
+					./hosts/agro/modules/configuration.nix
 
-	  				};
+					home-manager.nixosModules.home-manager
+					{
 
-				}
+						home-manager = {
 
-			];
+	    						useGlobalPkgs = true;
+	    						useUserPackages = true;
+	    						extraSpecialArgs = { inherit inputs; };
+	    						users.emettej = import ./hosts/agro/modules/home.nix;
 
+	  					};
+
+					}
+
+				];
+
+			};
 		};
-
 	};
 
 }

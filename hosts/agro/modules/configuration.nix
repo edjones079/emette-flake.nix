@@ -229,10 +229,33 @@
     neovim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     wget
     git
+    git-lfs
     firefox
     hyprland
     kitty
     home-manager
+
+    cron
+    hyfetch
+    eww
+    lshw
+    curl
+    zip
+    unzip
+    gnutar
+
+    python313Packages.meson
+    python313Packages.cmake
+    gnumake
+    libgccjit
+    gnat15
+
+    cmake
+    gcc
+
+    pkg-config
+    direnv
+    nix-direnv
   ];
 
   # Some programs need SUID wrappers, can be configured further or are

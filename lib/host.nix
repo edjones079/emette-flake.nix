@@ -35,7 +35,7 @@ with builtins;
 			{
 				imports = [ ../modules/system ] ++ sys_users;
 
-				jd = systemConfig;
+				emettej = systemConfig;
 
 				environment.etc = {
 					"hmsystemdata.json".text = toJSON userCfg;
